@@ -16,8 +16,9 @@
 /***
  *  Function: void initESPcam()
  *  Initialzes the onboard ESP camera.
+ * @param: SD: Set to 1 if using SD card. Makes the image resolution higher.
 ***/
-void initESPcam(){
+void initESPcam(bool SD){
   
   // Set the camera configuration
   camera_config_t config;
@@ -54,10 +55,6 @@ void initESPcam(){
     config.fb_count = 1;
   }
 
-    config.frame_size = FRAMESIZE_UXGA;
-    config.jpeg_quality = 10;
-    config.fb_count = 2;
-
 #if defined(CAMERA_MODEL_ESP_EYE)
   pinMode(13, INPUT_PULLUP);
   pinMode(14, INPUT_PULLUP);
@@ -77,9 +74,13 @@ void initESPcam(){
     s->set_brightness(s, 1); // up the brightness just a bit
     s->set_saturation(s, -1); // lower the saturation
   }
-  // drop down frame size for higher initial frame rate
-  s->set_framesize(s, FRAMESIZE_UXGA);
-
+  //Set image resolution is we have SD card then higher quality.
+  if(SD){
+    s->set_framesize(s, FRAMESIZE_UXGA);
+  }
+  else{
+    s->set_framesize(s, FRAMESIZE_SVGA);    
+  }
 #if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
   s->set_vflip(s, 1);
   s->set_hmirror(s, 1);
@@ -103,22 +104,25 @@ void capturePicture(bool SD){
         Serial.println("Image Aquisition Failed");
         return;
     }
+    if(!SD){
+      // Else store it in SPIFFS
+      Serial.println("File name:");
+      Serial.println(IMG_LOC);
+      File image = SPIFFS.open(IMG_LOC, FILE_WRITE);
 
-    // Else store it in SPIFFS
-    Serial.println("File name:");
-    Serial.println(IMG_LOC);
-    File image = SPIFFS.open(IMG_LOC, FILE_WRITE);
-
-    // If we couldnt open the file
-    if(!image){
-        Serial.println("File OPEN Failed");
-    }
-    else{
-       // image.write(fb->buf, fb->len); // The data and the lenght of the data.
-        Serial.print("File Saved in SPIFFS\n");
-        Serial.print("File Size: ");
-        Serial.print(image.size());
-        Serial.print(" bytes\n");
+      // If we couldnt open the file
+      if(!image){
+          Serial.println("File OPEN Failed");
+      }
+      else{
+        // image.write(fb->buf, fb->len); // The data and the lenght of the data.
+         Serial.print("File Saved in SPIFFS\n");
+         Serial.print("File Size: ");
+         Serial.print(image.size());
+         Serial.print(" bytes\n");
+      }
+      // now close the SPIFFS file
+      image.close();
     }
 
     if(SD){
@@ -133,8 +137,6 @@ void capturePicture(bool SD){
       File file = fs.open(path.c_str(), FILE_WRITE);
       if(!file){
         Serial.println("Failed to open file in writing mode");
-        // now close the file
-        image.close();
         esp_camera_fb_return(fb);       // free the camera image data
         return;
       } 
@@ -143,8 +145,5 @@ void capturePicture(bool SD){
       incrementTotalImages();
       Serial.println("IMAGE SAVED (Hopefully)");
     }
-
-    // now close the SPIFFS file
-    image.close();
     esp_camera_fb_return(fb);       // free the camera image data
 }

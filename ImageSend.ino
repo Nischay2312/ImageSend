@@ -62,20 +62,6 @@ void setup() {
         Serial.println(".");   
     }
 
-    // Mount SPIFFS
-    if(!SPIFFS.begin(true)){
-        Serial.println("SPIFFS Not Mounted Correctly");
-        delay(2500);
-        Serial.println("Restarting ESP");
-        delay(500);
-        ESP.restart();
-    }
-
-    else{
-        delay(500);
-        Serial.println("SPIFFS Mounted Successfully");
-    }
-
     // Setup SD Card if we want
     if(SAVE_SD){
         SDsetup();
@@ -89,8 +75,24 @@ void setup() {
         }
         //while(1);           //// REMOVE THISSSSS
     }
+    else{
+        // Mount SPIFFS
+        if(!SPIFFS.begin(true)){
+            Serial.println("SPIFFS Not Mounted Correctly");
+            delay(2500);
+            Serial.println("Restarting ESP");
+            delay(500);
+            ESP.restart();
+        }
+        
+        else{
+        delay(500);
+        Serial.println("SPIFFS Mounted Successfully");
+    }
+    }
+
     // Configure the camera module
-    initESPcam();
+    initESPcam(1);
 
     // Configure the Server 
     serverconfig();
@@ -125,13 +127,16 @@ void serverconfig(){
 
     // When the client request the image 
     server.on("/imagesaved", HTTP_GET, [](AsyncWebServerRequest * request){
-        //request->send(SPIFFS, IMG_LOC, "image/jpg", false);
-        String ImagePath = PicBaseName + String((totalimages())) + PICExtn; 
-        request->send(SD_MMC, ImagePath.c_str(), "image/jpg", false);
+        if(SAVE_SD){
+            String ImagePath = PicBaseName + String((totalimages())) + PICExtn; 
+            request->send(SD_MMC, ImagePath.c_str(), "image/jpg", false);
+        }
+        else {
+            request->send(SPIFFS, IMG_LOC, "image/jpg", false);
+        }
     });
 
     server.on("/reset", HTTP_GET, [](AsyncWebServerRequest * request){
-        //request->send(SPIFFS, IMG_LOC, "image/jpg", false);
         Serial.println("RESETING IMAGES COUNTER");
         createImagesCounter();
         request->send_P(200, "text/plain", "Reset Successful");

@@ -8,5 +8,5 @@
 // We save the photo in ESP's SPIFFS
 #define IMG_LOC "/pic.jpg"
 
-void initESPcam();
+void initESPcam(bool SD);
 void capturePicture(bool SD);
