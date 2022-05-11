@@ -3,7 +3,7 @@
 Sends images from ESP32 to connected clients. Saves it on SD card as well. 
 
 # Updates
-Log of what was done throughtout the timeline of the project.
+Log of what was done throughout the timeline of the project.
 ***
 <b>May 10, 2022:</b><br>
 * Initial commit and repository setup.
