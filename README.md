@@ -3,7 +3,7 @@
 Sends images from ESP32 to connected clients. Saves it on SD card as well. 
 
 <h3>UI</h3><br>
-![UI Image](https://github.com/Nischay2312/ImageSend/blob/main/assets/UI_ver1.png)
+<img src="assets/UI_ver1.png" width = "500">
 
 # Updates
 Log of what was done throughout the timeline of the project.
