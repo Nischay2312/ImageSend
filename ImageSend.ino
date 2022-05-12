@@ -45,6 +45,8 @@ AsyncWebServer server(80);
 // This is used to get picture
 bool getPic = false;
 
+// If we want to process the image.
+bool process = false;
 
 
 // Camera Pins defined in the PinAssigment Header
@@ -122,6 +124,7 @@ void serverconfig(){
     // When client presses the GET PHOTO button
     server.on("/click", HTTP_GET, [](AsyncWebServerRequest * request){
         getPic = true;
+        process = true;
         request->send_P(200, "text/plain", "Getting a PIC");
     });
 
@@ -136,11 +139,23 @@ void serverconfig(){
         }
     });
 
+    // When client requests to reset the image counter
     server.on("/reset", HTTP_GET, [](AsyncWebServerRequest * request){
         Serial.println("RESETING IMAGES COUNTER");
         createImagesCounter();
         request->send_P(200, "text/plain", "Reset Successful");
     });
+
+    // When client wants to check the process flag.
+       server.on("/check", HTTP_GET, [](AsyncWebServerRequest * request){
+        if(process){
+            request->send_P(200, "text/html", Yes_html);
+            process = false;
+        }
+        else{
+            request->send_P(200, "text/html", No_html);
+        }
+    }); 
     // Start the Server
     server.begin();
 }

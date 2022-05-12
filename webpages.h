@@ -25,9 +25,10 @@ const char index_html[] PROGMEM = R"rawliteral(
             <button onclick = "getPhoto()">Get IMAGE</button>
             <button onclick = "location.reload();">RELOAD</button>
             <button onclick = "ResetPhoto()">RESET PHOTOS</button>
+            <button onclick = "CheckProcess()">Check</button>
         </p>
     </div>
-    <div> <img src="imagesaved" id="photo" width="70%"></div>
+    <div> <img src="imagesaved" id="photo" width="50%" align="center"></div>
 </body>
 <script>
     function getPhoto() {
@@ -40,6 +41,39 @@ const char index_html[] PROGMEM = R"rawliteral(
         xhr.open('GET', "/reset", true);
         xhr.send();
     }
+    function CheckProcess() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', "/check", true);
+        xhr.send();
+    }
 </script>
+</html>
+)rawliteral";
+
+const char Yes_html[] PROGMEM = R"rawliteral(
+<!DOCTYPE HTML> 
+<html>
+<head>
+    <meta name = "viewport" content = "width=device-width, inital-scale = 1>
+</head>
+<body>
+    <div id="container">
+        <h1 id="CheckThis">YES</h1>
+    </div>
+</body>
+</html>
+)rawliteral";
+
+const char No_html[] PROGMEM = R"rawliteral(
+<!DOCTYPE HTML> 
+<html>
+<head>
+    <meta name = "viewport" content = "width=device-width, inital-scale = 1>
+</head>
+<body>
+    <div id="container">
+        <h1 id="CheckThis">NO</h1>
+    </div>
+</body>
 </html>
 )rawliteral";
