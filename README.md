@@ -8,6 +8,11 @@ Sends images from ESP32 to connected clients. Saves it on SD card as well.
 # Updates
 Log of what was done throughout the timeline of the project.
 ***
+<b>May 13, 2022:</b><br>
+* Improved Web scrapping. Periodically check a web page at ESP server to see if user added a new photo.
+* Updated UI. 
+
+
 <b>May 12, 2022:</b><br>
 * Added code functionality to check for a new image via a GET request. (Useful for later as we need to implement automation using python)
 * Started Python part. Added a basic webscrapper function to check if a particular text is in a webpage.  
