@@ -16,6 +16,8 @@
  *******/
 
 // Libraries
+#define SAVE_SD 1 
+
 #include "WiFi.h"
 #include "esp_camera.h"
 #include "Arduino.h"
@@ -29,7 +31,6 @@
 #include "SDcardFunctions.h"
 #include "SD_MMC.h"
 
-#define SAVE_SD 1 
 
 // Function Definitions
 void serverconfig();
@@ -118,7 +119,11 @@ void serverconfig(){
 
     // When client request the root page for the server 
     server.on("/", HTTP_GET, [](AsyncWebServerRequest * request){
-        request->send_P(200, "text/html", index_html);
+       #if SAVE_SD == 0 
+           request->send_P(200, "text/html", index_html);
+       #else 
+            request->send(SD_MMC, "/SiteData/index.html", "text/html", false);
+       #endif
     });
 
     // When client presses the GET PHOTO button
@@ -149,13 +154,28 @@ void serverconfig(){
     // When client wants to check the process flag.
        server.on("/check", HTTP_GET, [](AsyncWebServerRequest * request){
         if(process){
-            request->send_P(200, "text/html", Yes_html);
+            #if SAVE_SD == 0
+                request->send_P(200, "text/html", Yes_html);
+            #else
+                 request->send(SD_MMC, "/SiteData/Yes.html", "text/html", false);
+            #endif
             process = false;
         }
         else{
-            request->send_P(200, "text/html", No_html);
+            #if SAVE_SD == 0
+                request->send_P(200, "text/html", No_html);
+            #else
+                 request->send(SD_MMC, "/SiteData/No.html", "text/html", false);
+            #endif
         }
     }); 
+
+#if SAVE_SD == 1
+    //When client requests icon
+    server.on("/icon.ico", HTTP_GET, [](AsyncWebServerRequest * request){
+      request->send(SD_MMC, "/SiteData/icon.ico", "image/x-icon", false);
+    });
+#endif
     // Start the Server
     server.begin();
 }

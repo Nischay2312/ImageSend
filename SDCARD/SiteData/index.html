@@ -1,18 +1,8 @@
-/*****
- *  Header File to hold all the Webpage(s) for the server
- * 
- *  Nischay Joshi 
- * 
- * This in only used If we are not using an SD Card. Otherwise put 
- * HTML files inside the SD card in the SiteData folder.
- *****/
-
-#if SAVE_SD == 0
-
-const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML> 
 <html>
 <head>
+    <title>ImageSend</title>
+    <link rel="icon" type="image/x-icon" href="icon.ico">
     <meta name = "viewport" content = "width=device-width, inital-scale = 1>
     <style>
     body {text-align: center; }
@@ -51,36 +41,3 @@ const char index_html[] PROGMEM = R"rawliteral(
     }
 </script>
 </html>
-)rawliteral";
-
-
-const char Yes_html[] PROGMEM = R"rawliteral(
-<!DOCTYPE HTML> 
-<html>
-<head>
-    <meta name = "viewport" content = "width=device-width, inital-scale = 1>
-</head>
-<body>
-    <div id="container">
-        <h1 id="CheckThis">YES</h1>
-    </div>
-</body>
-</html>
-)rawliteral";
-
-
-const char No_html[] PROGMEM = R"rawliteral(
-<!DOCTYPE HTML> 
-<html>
-<head>
-    <meta name = "viewport" content = "width=device-width, inital-scale = 1>
-</head>
-<body>
-    <div id="container">
-        <h1 id="CheckThis">NO</h1>
-    </div>
-</body>
-</html>
-)rawliteral";
-
-#endif
