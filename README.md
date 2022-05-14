@@ -3,11 +3,16 @@
 Sends images from ESP32 to connected clients. Saves it on SD card as well. 
 
 <h3>UI</h3><br>
-<img src="assets/UI_ver1.png" width="50%" align="middle">
+<img src="assets/UI_ver2.png" width="50%" align="middle">
 
 # Updates
 Log of what was done throughout the timeline of the project.
 ***
+<b>May 14, 2022:</b><br>
+* Added functionality to read HTML pages from SD Card. Therby adding more flexiblity for better and more <b><u><i>colourful</i></u></b> web pages. Just change the SAVE_SD to 1 to enable SD card. 
+* All the website resources are in the SD card folder. Just copy contents of that to the root of your SD card.  
+* Added custom designed website icon. -> <img src="SDCARD/SiteData/icon.ico"> 
+
 <b>May 13, 2022:</b><br>
 * Improved Web scrapping. Periodically check a web page at ESP server to see if user added a new photo.
 * Updated UI. 
