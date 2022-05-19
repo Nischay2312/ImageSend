@@ -1,3 +1,4 @@
+### This file is for internal testing. All the code here is experimental and may be wrong.
 import cv2
 import matplotlib.pyplot as plt
 import cvlib as cv

@@ -8,7 +8,7 @@
 #               url: The url to check, default: "http://192.168.180.3/check" 
 #            tofind: The text to check for, default: "YES"
 #
-def CheckURL(url = "http://192.168.180.3/check", tofind = "YES"):
+def CheckURL(url = "http://192.168.189.3/check", tofind = "YES"):
     from urllib.request import urlopen
     ## These are exceptions added to catch if page could not be opened.
     from urllib.error import HTTPError
@@ -57,4 +57,5 @@ def CheckURL(url = "http://192.168.180.3/check", tofind = "YES"):
         return 1
 
 #result = CheckURL("http://olympus.realpython.org/profiles/aphroditee", "html")
+#result = CheckURL()
 #print("Result = ", result)
