@@ -17,7 +17,7 @@
 
 #define MakeWiFiHotSpot 0       //Set this to 0 of you are using other WiFi network. And update that in the network credentials. 
 #define SAVE_SD 1 
-#define WiFiConnectTimeOut 10
+#define WiFiConnectTimeOut 5
 
 // Network Credentials
 const char* ssid = "OP7";
@@ -68,7 +68,7 @@ void setup() {
             delay(500);
             *counter= *counter + 1;
             Serial.println(".");
-            if(*counter == (WiFiConnectTimeOut-1))
+            if(*counter == ((WiFiConnectTimeOut * 2)-1))
             {
                 ESP.restart();
                 Serial.println("---------Restart Failed, I should have not been printed!!!!!!-----------");
@@ -111,7 +111,7 @@ void setup() {
     }
 
     // Configure the camera module
-    initESPcam(1);
+    initESPcam(SAVE_SD);
 
     // Configure the Server 
     serverconfig();

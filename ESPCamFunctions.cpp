@@ -115,7 +115,7 @@ void capturePicture(bool SD){
           Serial.println("File OPEN Failed");
       }
       else{
-        // image.write(fb->buf, fb->len); // The data and the lenght of the data.
+         image.write(fb->buf, fb->len); // The data and the lenght of the data.
          Serial.print("File Saved in SPIFFS\n");
          Serial.print("File Size: ");
          Serial.print(image.size());
