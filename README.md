@@ -11,7 +11,7 @@ Sends images from ESP32 to connected clients. Saves it on SD card as well.
 * Change your WiFi credentials in the .ino file.
 * Set up the board with the following pinout(for ESPcam): <br>RX    -> U0T<br>TX    -> U0R<br>5V    -> VCC(5V)<br>GND   -> GND<br>GPIO0 -> GND        (This sets the ESPCam into program mode)<br>Youl will need an <a href="https://www.amazon.ca/dp/B01JG8H5U4?ref_=cm_sw_r_cp_ud_dp_CZVW7NPZDQ7AMHV7MEAR">external FTDI programmer</a> for ESPCam. The RX, TX, 5V, GND are the pins from the FTDI Programmer. For regular ESP boards, you can directly program it as usual.
 * Once you program it, remove the connection between GPIO0 and GND(only for ESPCam). 
-* Program the board and open the serial monitor. Reset the ESP. You should see it connecting to WiFi with dots being printed, if for some reason it doesnt connect within 5 seconds, reset the ESP. Once everything if fine you should see the IP address to access the server. Keep in mind the the accessing computer also needs to be on the same WiFi network. You should see the UI below without the picture. 
+* Program the board and open the serial monitor. Reset the ESP. You should see it connecting to WiFi with dots being printed, if the connection cannot be setup in 5 seconds, the ESP will restart. You can change the timout value in the .ino file. Once everything if fine you should see the IP address to access the server. Keep in mind the the accessing computer also needs to be on the same WiFi network. You should see the UI below without the picture. 
 * Press "Get Image" to take a picture, the camera lights should flash. Then click "Reload" or reload the page to see the image.
 
 <h3>User Interface</h3><br>
@@ -20,6 +20,11 @@ Sends images from ESP32 to connected clients. Saves it on SD card as well.
 # Updates
 Log of what was done throughout the timeline of the project.
 ***
+<b>May 18, 2022:<b><br>
+* Introduced Image download functionality. Python script periodically checks the server for a new image, once there is one, it downloads it. Now further modifications include processing it.
+* Added options to use external WiFi network or ESP's soft access point to host the web server.
+* Implemented ESP WiFi connection timeout. If the ESP does not connect to the specified WiFi network within 5 seconds, the firmware resets the board.    
+  
 <b>May 14, 2022:</b><br>
 * Added functionality to read HTML pages from SD Card. Therby adding more flexiblity for better and more <b><u><i>colourful</i></u></b> web pages. Just change the SAVE_SD to 1 to enable SD card. 
 * All the website resources are in the SD card folder. Just copy contents of that to the root of your SD card.  
