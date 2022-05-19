@@ -1,16 +1,6 @@
-### This file is for internal testing. All the code here is experimental and may be wrong.
+BaseIP = r"http://192.168.189.3"
+ImageURL = BaseIP + r"/imagesaved"
+WebsiteUrl = BaseIP + r"/check"
 
-from threading import Timer
-import time
-
-def hello():
-    print("hello, world")
-    t = Timer(1, hello)
-    t.start()  # after 30 seconds, "hello, world" will be printed
-
-t = Timer(1.0, hello)
-t.start()  # after 30 seconds, "hello, world" will be printed
-print("done")
-time.sleep(8)
-print("print 2")
-t.cancel()
+print(ImageURL)
+print(WebsiteUrl)

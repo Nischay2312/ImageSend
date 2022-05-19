@@ -6,9 +6,9 @@ from tkinter.messagebox import NO
 import webScrapper
 
 ### A demo function. Prints some text.
-def Demo(n):
+def Demo(n=5, m=2):
     for i in range(1,n):
-        print("HElwOl", i)
+        print("HElwOl", i*m)
 
 ### Function: checkContinously()
 # Continously repeats a function. If the output of the function matches, then executes another function.
