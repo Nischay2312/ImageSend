@@ -15,9 +15,15 @@
  *              GPIO0 -> GND        (This sets the ESPCam into program mode)
  *******/
 
-// Libraries
+#define MakeWiFiHotSpot 0       //Set this to 0 of you are using other WiFi network. And update that in the network credentials. 
 #define SAVE_SD 1 
+#define WiFiConnectTimeOut 10
 
+// Network Credentials
+const char* ssid = "OP7";
+const char* password = "Manasjojo";
+
+// Libraries
 #include "WiFi.h"
 #include "esp_camera.h"
 #include "Arduino.h"
@@ -35,12 +41,7 @@
 // Function Definitions
 void serverconfig();
 
-
-// Network Credentials
-const char* ssid = "OP7";
-const char* password = "Manasjojo";
-
-// Create web server object on port 55
+// Create web server object on port 80
 AsyncWebServer server(80);
 
 // This is used to get picture
@@ -58,13 +59,28 @@ void setup() {
     delay(2000);
 
     // Connect to WiFi
-    Serial.println("Connecting to WiFi...");
-    WiFi.begin(ssid, password);
-    while(WiFi.status() != WL_CONNECTED){
-        delay(500);
-        Serial.println(".");   
+    if(!MakeWiFiHotSpot){
+        Serial.println("Connecting to WiFi...");
+        WiFi.begin(ssid, password);
+        uint8_t *counter = (uint8_t *)malloc(sizeof(uint8_t));
+        *counter = 0;
+        while(WiFi.status() != WL_CONNECTED){
+            delay(500);
+            *counter= *counter + 1;
+            Serial.println(".");
+            if(*counter == (WiFiConnectTimeOut-1))
+            {
+                ESP.restart();
+                Serial.println("---------Restart Failed, I should have not been printed!!!!!!-----------");
+            }   
+        }
+        Serial.println("Freeing counter");
+        free(counter);     //Trying to save a bit if memory here. Hehe (:
     }
-
+    else{
+        Serial.println("Connecting to WiFi...");
+        WiFi.softAP(ssid, password);
+    }
     // Setup SD Card if we want
     if(SAVE_SD){
         SDsetup();
@@ -100,9 +116,15 @@ void setup() {
     // Configure the Server 
     serverconfig();
     
-     // Print ESP32 Local IP Address
+    // Print ESP32 Local IP Address
     Serial.print("IP Address: http://");
-    Serial.println(WiFi.localIP());
+    if(!MakeWiFiHotSpot){
+        Serial.println(WiFi.localIP());
+    }
+    else{
+        IPAddress IP = WiFi.softAPIP();
+        Serial.println(IP);
+    }
 }
 
 void loop(){

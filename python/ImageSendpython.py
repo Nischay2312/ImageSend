@@ -7,6 +7,8 @@ import webScrapper
 
 #Base Web server IP, replace it with what you get form ESP in serial terminal.
 BaseIP = r"http://192.168.189.3"
+#BaseIP = r"http://192.168.4.1"
+
 
 #This is where the image will be downloaded in your system, change it in your end.
 SAVE_LOC = r"C:\Users\nisch\OneDrive\Desktop\SummerProjects2022\ESPCam\SecretProjectToRuleTheWrld\Ver1.0\ImSend\ImageSend\python\Image"
