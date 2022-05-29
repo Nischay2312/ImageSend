@@ -27,15 +27,16 @@ for info in heading_object:
     print(info.getText())
     print("------")
 """
+
+
 def WebSearch(Url):
     import requests
     import bs4
     request_result = requests.get(Url)
     soup = bs4.BeautifulSoup(request_result.text, "html.parser")
     mainHeadings = soup.find_all('h3')
-    print(mainHeadings.getText())
     for heading in mainHeadings:
         print(heading.getText())
         print("-----")
 
-WebSearch("https://google.com/search?q=Van")
+WebSearch("https://google.com/search?q=qeidn")
