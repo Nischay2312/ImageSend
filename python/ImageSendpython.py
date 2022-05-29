@@ -35,10 +35,14 @@ def ImageDownload(url, location):
     shutil.copyfileobj(image.raw, file)
     file.close()
     print("Image Saved To: ", filelocation)
+
+    #this part deals with Image search and displaying the results
     searchUrl = ImageSearch(filelocation)
     print("------------IMAGE SEARCH RESULTS---------------")
     WebSearch(searchUrl)    
     print("----------------RESULTS ENDS-------------------")
+
+
 
 ### Function to search an image on Google.
 #   
@@ -51,8 +55,10 @@ def ImageSearch(location):
     multipart = {'encoded_image': (location, open(location, 'rb')), 'image_content': ''}
     response = requests.post(searchUrl, files = multipart, allow_redirects=False)
     ReceivedUrl = response.headers['Location']
-    print(ReceivedUrl) 
+    #print(ReceivedUrl) 
     return ReceivedUrl
+
+
 
 ### Function to retrieve all the link heading from a webpage.
 #   
@@ -67,6 +73,8 @@ def WebSearch(Url):
     for heading in mainHeadings:
         print(heading.getText())
         print("-----")
+
+
 
 PeriodicChecker.checkContinously(intr = 3.0, func = webScrapper.CheckURL, func_param = [WebsiteUrl, WebsiteKwrd], cond = 1, exec = ImageDownload, exec_param = [ImageURL, SAVE_LOC])
 print("Program Ending")
