@@ -25,6 +25,7 @@ WebsiteKwrd = r"YES"
 #
 def ImageDownload(url, location):
     import requests
+    import webbrowser
     import shutil
     #Get the image
     image = requests.get(url, stream = True)
@@ -35,6 +36,21 @@ def ImageDownload(url, location):
     shutil.copyfileobj(image.raw, file)
     file.close()
     print("Image Saved To: ", filelocation)
+    searchUrl = 'http://www.google.com/searchbyimage/upload'
+    multipart = {'encoded_image': (filelocation, open(filelocation, 'rb')), 'image_content': ''}
+    response = requests.post(searchUrl, files=multipart, allow_redirects=False)
+    fetchUrl = response.headers['Location']
+    webbrowser.open(fetchUrl)
+
+def ImageSearch(location):
+    import requests
+    searchUrl = 'http://www.google.com/searchbyimage/upload'
+    multipart = {'encode_image':(location, open(location, 'rb')), 'image_content': ''}
+    response = requests.post(searchUrl, files = multipart, allow_redirects=False)
+    ReceivedUrl = response.headers['Location']
+    print(ReceivedUrl) 
+
 
 PeriodicChecker.checkContinously(intr = 3.0, func = webScrapper.CheckURL, func_param = [WebsiteUrl, WebsiteKwrd], cond = 1, exec = ImageDownload, exec_param = [ImageURL, SAVE_LOC])
 print("Program Ending")
+

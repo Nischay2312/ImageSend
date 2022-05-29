@@ -23,8 +23,8 @@ def checkContinously(intr= 5.0, func = webScrapper.CheckURL, func_param = None, 
         print("Done")
         exec(*exec_param)
         #This part sets up a timer of intr seconds to call the function again.
-#        t = Timer(intr, checkContinously(intr, func, cond, exec))
-#        t.start()
+        t = Timer(intr, checkContinously,[intr, func, func_param, cond, exec, exec_param])
+        t.start()
     else:
         t = Timer(intr, checkContinously,[intr, func, func_param, cond, exec, exec_param])
         t.start()
