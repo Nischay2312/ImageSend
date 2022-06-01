@@ -71,6 +71,8 @@ def ImageSearch(location):
 def WebSearch(Url):
     import bs4
     import requests
+
+    #extremely useful, if we omit these, Google redirects us to their main webpage.
     headers = {
     'authority': 'www.google.com',
     'dnt': '1',
@@ -83,10 +85,11 @@ def WebSearch(Url):
     'sec-fetch-dest': 'document',
     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
     }
+    #open the webpage
     request_result = requests.get(Url, headers=headers)
     soup = bs4.BeautifulSoup(request_result.text, "html.parser")
-    print(request_result.history)
-    print(request_result.url)
+    #print(request_result.history)
+    #print(request_result.url)
     #print(soup)
     mainHeadings = soup.find_all("h3")
     for heading in mainHeadings:
