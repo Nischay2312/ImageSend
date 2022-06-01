@@ -1,6 +1,6 @@
 # ImageSend
 ***
-Sends images from ESP32 to connected clients. Saves it on SD card as well. 
+Sends captured images from ESP32 to connected clients. Saves it on SD card as well. Google Image Search available for the captured Images. 
 
 # Installation 
 ***
