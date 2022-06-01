@@ -21,8 +21,8 @@ Sends captured images from ESP32 to connected clients. Saves it on SD card as we
 Log of what was done throughout the timeline of the project.
 ***
 <b>June 1, 2022:<b><br>
-* Proud to present you Google Image Search capability. Click a picture from the website using the "GET IMAGE" button, and run <a href="https://github.com/Nischay2312/ImageSend/blob/main/python/ImageSendpython.py">this</a> python script. The terminal displays the Google Image Search results for the image captured using the ESP. The feature is planned to be used as identifying coomon objects in the fram using Google's image recognition platform. 
-* Fixed the google redirect issue, added http headers to the request allowing the python script to not being detected as bot by Google.
+* Presenting you the Google Image Search capability. Capture a picture on hthe ESP using the "GET IMAGE" button on the ImageSend website, and run <a href="https://github.com/Nischay2312/ImageSend/blob/main/python/ImageSendpython.py">this</a> python script. The terminal displays the Google Image Search results for the image captured using the ESP. The feature is planned to be used for identifying common objects in the frame using Google's image recognition platform. 
+* Fixed the notorious google redirect issue, added http headers to the request allowing the python script to not being detected as bot by Google. Took quite some time to figure out correct the headers to send.
 * Note: The code works at the moment but hasn't been fully tested, so errors might pop up. I am currently testing the code and trying to catch errors.
   
 <b>May 18, 2022:<b><br>
