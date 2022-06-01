@@ -57,7 +57,9 @@ def ImageSearch(location):
     multipart = {'encoded_image': (location, open(location, 'rb')), 'image_content': ''}
     response = requests.post(searchUrl, files = multipart, allow_redirects=False)
     ReceivedUrl = response.headers['Location']
-    #print(ReceivedUrl) 
+    print("Received URL : ")
+    print(ReceivedUrl) 
+    print("----------")
     return ReceivedUrl
 
 
