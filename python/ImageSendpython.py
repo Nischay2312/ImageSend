@@ -1,6 +1,8 @@
 ## Python script that handles the main image processing part of Image Send Computer Hub
 ## Nischay Joshi
 
+# APIKEy = AIzaSyAIafWKFaHFYvEvJiw_ctbRHlY_CKf0oZo
+
 #Imports 
 import PeriodicChecker 
 import webScrapper
@@ -65,11 +67,26 @@ def ImageSearch(location):
 #   @Params: Url:  The url of the webpage to retrive data from.
 #
 def WebSearch(Url):
-    import requests
     import bs4
-    request_result = requests.get(Url)
+    import requests
+    headers = {
+    'authority': 'www.google.com',
+    'dnt': '1',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'sec-fetch-site': 'none',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-user': '?1',
+    'sec-fetch-dest': 'document',
+    'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+    }
+    request_result = requests.get(Url, headers=headers)
     soup = bs4.BeautifulSoup(request_result.text, "html.parser")
-    mainHeadings = soup.find_all('h3')
+    print(request_result.history)
+    print(request_result.url)
+    #print(soup)
+    mainHeadings = soup.find_all("h3")
     for heading in mainHeadings:
         print(heading.getText())
         print("-----")
