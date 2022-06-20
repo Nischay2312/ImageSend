@@ -74,7 +74,8 @@ void initESPcam(bool SD){
     s->set_brightness(s, 1); // up the brightness just a bit
     s->set_saturation(s, -1); // lower the saturation
   }
-  //Set image resolution is we have SD card then higher quality.
+  /* If we have SD card then we set the image resolution to higher quality. */
+  //Set image resolution if we have SD card then higher quality.
   if(SD){
     s->set_framesize(s, FRAMESIZE_UXGA);
   }
