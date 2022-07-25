@@ -1,6 +1,11 @@
 
 
 def WebSearch(Url):
+    """
+    It takes a URL as an input, and then prints out the text of all the h3 tags on the page.
+    
+    :param Url: The URL of the website you want to search
+    """
     import bs4
     import requests
     headers = {

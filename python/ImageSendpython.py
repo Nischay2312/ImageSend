@@ -8,7 +8,7 @@ import PeriodicChecker
 import webScrapper
 
 #Base Web server IP, replace it with what you get form ESP in serial terminal.
-BaseIP = r"http://192.168.189.3"
+BaseIP = r"http://192.168.160.3"
 #BaseIP = r"http://192.168.4.1"
 
 
@@ -20,12 +20,17 @@ ImageURL = BaseIP + r"/imagesaved"
 WebsiteUrl = BaseIP + r"/check"
 WebsiteKwrd = r"YES"
 
-### Function to Download an image.
-#   
+### The main function that handles the process of ImageSend. 
+#   1.  Firstly, downloads the image from the ESP server based on the "url" parameter. The image is saved at "location"
+#   2.  Then it does image search and recognition on the downloaded image.  
+#       i. Searchs the image on Google.
+#      ii. Does basic object regonition on the image.
+#    (more to be added)
+#
 #   @Params: url:       The url of the image.
 #            location:  The location where the image needs to be downloaded.
 #
-def ImageDownload(url, location):
+def ImageSendMain(url, location):
     import requests
     import shutil
     #Get the image
@@ -40,9 +45,9 @@ def ImageDownload(url, location):
 
     #this part deals with Image search and displaying the results
     searchUrl = ImageSearch(filelocation)
-    print("------------IMAGE SEARCH RESULTS---------------")
+    print("------------GOOGLE IMAGE SEARCH RESULTS---------------")
     WebSearch(searchUrl)    
-    print("----------------RESULTS ENDS-------------------")
+    print("-----------GOOGLE IMAGE SEARCH RESULTS ENDS-----------")
 
 
 
@@ -72,7 +77,7 @@ def WebSearch(Url):
     import bs4
     import requests
 
-    #extremely useful, if we omit these, Google redirects us to their main webpage.
+    #extremely useful, if we omit these, Google redirects us to their bot webpage.
     headers = {
     'authority': 'www.google.com',
     'dnt': '1',
@@ -98,6 +103,6 @@ def WebSearch(Url):
 
 
 
-PeriodicChecker.checkContinously(intr = 3.0, func = webScrapper.CheckURL, func_param = [WebsiteUrl, WebsiteKwrd], cond = 1, exec = ImageDownload, exec_param = [ImageURL, SAVE_LOC])
+PeriodicChecker.checkContinously(intr = 3.0, func = webScrapper.CheckURL, func_param = [WebsiteUrl, WebsiteKwrd], cond = 1, exec = ImageSendMain, exec_param = [ImageURL, SAVE_LOC])
 print("Program Ending")
 
